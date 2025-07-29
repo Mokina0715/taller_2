@@ -2,11 +2,14 @@
 
 {% block head %}
     <style>
-        .repuesta_correcta {
-            background-color: greenyellow;
+        .respuesta_correcta {
+            background-color: rgba(55, 243, 86, 1);
         }
-        .repuesta_incorrecta {
+        .respuesta_incorrecta {
             background-color: rgb(255, 71, 47);
+        }
+        .respuesta_alta {
+            background-color: rgba(222, 224, 98, 1);
         }
     </style>   
 {% endblock %}
@@ -27,7 +30,8 @@
             {% for exam in exams %}
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm h-100">
-                        <div class="card-body  {% if exam.score > 50  %} repuesta_correcta {% else %} repuesta_incorrecta {% endif %}  " > 
+                        {% comment %} <div class="card-body  {% if exam.score > 50  %} respuesta_correcta {% elif exam.score > 80 and exam.score < 100 %} respuesta_alta {%else} respuesta_incorrecta {% endif %}  " >  {% endcomment %}
+                        <div class="card-body {% if exam.score >= 80 and exam.score < 100 %}respuesta_alta{% elif exam.score > 50 %}respuesta_correcta{% else %}respuesta_incorrecta{% endif %}">
                             <h5 class="card-title">{{ exam.student_name }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">{{ exam.date|date:"Y-m-d H:i" }}</h6>
                             <p class="card-text">
