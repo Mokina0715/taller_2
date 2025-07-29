@@ -1,4 +1,16 @@
 {% extends 'base.html' %}
+
+{% block head %}
+    <style>
+        .repuesta_correcta {
+            background-color: greenyellow;
+        }
+        .repuesta_incorrecta {
+            background-color: rgb(255, 71, 47);
+        }
+    </style>   
+{% endblock %}
+
 {% block container %}
 
 <div class="container mt-4">
@@ -15,7 +27,7 @@
             {% for exam in exams %}
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm h-100">
-                        <div class="card-body">
+                        <div class="card-body  {% if exam.score > 50  %} repuesta_correcta {% else %} repuesta_incorrecta {% endif %}  " > 
                             <h5 class="card-title">{{ exam.student_name }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">{{ exam.date|date:"Y-m-d H:i" }}</h6>
                             <p class="card-text">
