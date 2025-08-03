@@ -1,15 +1,31 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Exam, Question, Answer
+from .models import Exam, Question, Answer, Certificado, Subject, Category
 import random
 
 def index(request):
-    exams = Exam.objects.all().order_by('-date') # muestra los últimos 10 exámenes
-    return render(request, 'index.html', {'exams': exams})
+    subjects = Subject.objects.all()
+    categories = Category.objects.all()
+    exams = Exam.objects.all().order_by('-date')
+    context = {
+        'exams': exams, 
+        'categories': categories,
+        'subjects': subjects
+    }
+    return render(request, 'index.html', context)
 
 def exam_start(request):
     if request.method == 'POST':
         student_name = request.POST.get('student_name')
-        all_questions = list(Question.objects.all())
+        category = request.POST.get('category')
+        subject = request.POST.get('subject')
+        print(f"Selected category: {category}")
+        query = Question.objects
+        if category and category.isdigit():
+            query = query.filter(subject__category__id=category)
+        if subject and subject.isdigit():
+            query = query.filter(subject__id=subject)
+        
+        all_questions = list(query.all())
         selected_questions = random.sample(all_questions, min(10, len(all_questions)))
 
         exam = Exam.objects.create(student_name=student_name)
@@ -21,7 +37,9 @@ def exam_start(request):
 
         return redirect('exam_question')
 
-    return render(request, 'exam_start.html')
+    category = request.GET.get('category')
+    subject = request.GET.get('subject')
+    return render(request, 'exam_start.html', {'category': category, 'subject': subject})
 
 
 def exam_question(request):
@@ -65,3 +83,11 @@ def exam_result(request):
     exam = get_object_or_404(Exam, id=exam_id)
 
     return render(request, 'exam_result.html', {'exam': exam})
+
+def view_certificado(request, exam_id):
+    exam = get_object_or_404(Exam, id=exam_id)
+    if exam.score == 100.00:
+        certificado = Certificado.objects.filter(exam=exam).first()
+        if not certificado:
+            certificado = Certificado.objects.create(exam=exam) 
+    return render(request, 'certificado.html', {'certificado': certificado})

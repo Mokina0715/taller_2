@@ -8,4 +8,5 @@ urlpatterns = [
     path('examen/iniciar/', views.exam_start, name='exam_start'),
     path('examen/pregunta/', views.exam_question, name='exam_question'),
     path('examen/resultado/', views.exam_result, name='exam_result'),
+    path('examen/certificado/<int:exam_id>/', views.view_certificado, name='view_certificado'),
 ]

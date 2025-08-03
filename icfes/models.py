@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -55,3 +56,10 @@ class Answer(models.Model):
 
     def __str__(self):
         return f"Answer to Q{self.question.id} by {self.exam.student_name}"
+
+class Certificado(models.Model):
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    exam = models.OneToOneField(Exam, on_delete=models.CASCADE, related_name='certificado')
+
+    def __str__(self):
+        return f"Certificate for {self.exam.student_name} - Score: {self.exam.score}"

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block container %}
+<div class="container mt-4">
+    <h2>Certificado de Examen</h2>
+    <p>Nombre del Estudiante: {{ certificado.exam.student_name }}</p>
+    <p>Fecha del Examen: {{ certificado.exam.date }}</p>
+    <p>Calificación: {{ certificado.exam.score }}</p>
+    <p>UUID del Certificado: {{ certificado.uuid }}</p>
+</div>
+{% endblock %}

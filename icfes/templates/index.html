@@ -2,14 +2,11 @@
 
 {% block head %}
     <style>
-        .respuesta_correcta {
-            background-color: rgba(55, 243, 86, 1);
+        .repuesta_correcta {
+            background-color: greenyellow;
         }
-        .respuesta_incorrecta {
+        .repuesta_incorrecta {
             background-color: rgb(255, 71, 47);
-        }
-        .respuesta_alta {
-            background-color: rgba(222, 224, 98, 1);
         }
     </style>   
 {% endblock %}
@@ -20,6 +17,19 @@
     <h1>Bienvenido al Simulador ICFES</h1>
     <p>Haz clic para comenzar el simulacro:</p>
     <a href="{% url 'exam_start' %}" class="btn btn-primary">Iniciar examen</a>
+    {% if categories %}
+        <h3 class="mt-4">Temas Disponibles</h3>
+            {% for category in categories %}
+                <a href="{% url 'exam_start' %}?category={{ category.id }}" class="btn btn-primary">{{ category.name }}</a>
+            {% endfor %}
+    {% endif %}
+
+    {% if subjects %}
+        <h3 class="mt-4">Materias Disponibles</h3>
+            {% for subject in subjects %}
+                <a href="{% url 'exam_start' %}?subject={{ subject.id }}" class="btn btn-primary">{{ subject.name }}</a>
+            {% endfor %}
+    {% endif %}
 
     <hr>
 
@@ -30,13 +40,17 @@
             {% for exam in exams %}
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm h-100">
-                        {% comment %} <div class="card-body  {% if exam.score > 50  %} respuesta_correcta {% elif exam.score > 80 and exam.score < 100 %} respuesta_alta {%else} respuesta_incorrecta {% endif %}  " >  {% endcomment %}
-                        <div class="card-body {% if exam.score >= 80 and exam.score < 100 %}respuesta_alta{% elif exam.score > 50 %}respuesta_correcta{% else %}respuesta_incorrecta{% endif %}">
+                        <div class="card-body  {% if exam.score > 50  %} repuesta_correcta {% else %} repuesta_incorrecta {% endif %}  " > 
                             <h5 class="card-title">{{ exam.student_name }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">{{ exam.date|date:"Y-m-d H:i" }}</h6>
                             <p class="card-text">
                                 <strong>Puntaje:</strong> {{ exam.score }} / 100
                             </p>
+                            {% if exam.score == 100.00 %}
+                                <a href="{% url 'view_certificado' exam.id %}" class="btn btn-success">Ver Certificado</a>
+                            {% else %}
+                                <span class="text-danger">No calificado</span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

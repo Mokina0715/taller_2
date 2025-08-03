@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Subject, Question, Exam, Answer
+from .models import Category, Subject, Question, Exam, Answer, Certificado
 
 
 @admin.register(Category)
@@ -38,3 +38,8 @@ class AnswerAdmin(admin.ModelAdmin):
     list_display = ('id', 'exam', 'question', 'selected_answer', 'is_correct')
     list_filter = ('is_correct', 'selected_answer')
     search_fields = ('question__text', 'exam__student_name')
+
+@admin.register(Certificado)
+class CertificadoAdmin(admin.ModelAdmin):
+    list_display = ('uuid', 'exam')
+    search_fields = ('exam__student_name',)
