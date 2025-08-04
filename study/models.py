@@ -39,12 +39,3 @@ class StudyMaterial(models.Model):
     def __str__(self):
         return self.title
 
-    def get_type_display_icon(self):
-        icons = {
-            'video': '🎥',
-            'web': '🌐',
-            'image': '🖼️',
-            'pdf': '📄',
-            'note': '📝',
-        }
-        return icons.get(self.resource_type, '📚')
