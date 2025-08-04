@@ -15,16 +15,16 @@
     </article>
     {% if categories %}
         <h3 class="mt-4">Temas Disponibles</h3>
-            {% for category in categories %}
-                <a href="{% url 'exam_start' %}?category={{ category.id }}" class="btn btn-primary">{{ category.name }}</a>
-            {% endfor %}
+        {% for category in categories %}
+            <a href="{% url 'exam_start' %}?category={{ category.id }}" class="btn btn-primary">{{ category.name }}</a>
+        {% endfor %}
     {% endif %}
 
     {% if subjects %}
         <h3 class="mt-4">Materias Disponibles</h3>
-            {% for subject in subjects %}
-                <a href="{% url 'exam_start' %}?subject={{ subject.id }}" class="btn btn-primary">{{ subject.name }}</a>
-            {% endfor %}
+        {% for subject in subjects %}
+            <a href="{% url 'exam_start' %}?subject={{ subject.id }}" class="btn btn-primary">{{ subject.name }}</a>
+        {% endfor %}
     {% endif %}
 
     <hr>
