@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block container %}
+
+<div class="container mt-4">
+  <h2>Materiales de {{ subtopic.name }}</h2>
+
+  <div class="row">
+    {% for material in materials %}
+      <div class="col-md-4 mb-3">
+        <div class="card {% if material.seen %} border-success {% endif %}">
+          <div class="card-body">
+            <h5 class="card-title">{{ material.title }}</h5>
+            <p class="card-text">{{ material.description|default:"(Sin descripción)" }}</p>
+            <a href="{% url 'material_detail' material.id %}" class="btn btn-primary btn-sm">Ver detalle</a>
+            {% if material.seen %}
+              <span class="badge bg-success float-end">Visto</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <a href="{% url 'subtopic_list' subtopic.subject.category.id %}">← Volver a Subtemas</a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+.respuesta_correcta {
+    background-color: rgb(101, 241, 125);
+}
+
+.respuesta_incorrecta {
+    background-color: rgb(250, 93, 72);
+}
+
+.respuesta_alta {
+    background-color: rgb(241, 239, 104);
+}
+
+.separate-content {
+    display: flex;
+    justify-content: space-between;
+}

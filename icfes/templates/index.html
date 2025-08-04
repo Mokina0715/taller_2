@@ -1,22 +1,18 @@
 {% extends 'base.html' %}
 
-{% block head %}
-    <style>
-        .repuesta_correcta {
-            background-color: greenyellow;
-        }
-        .repuesta_incorrecta {
-            background-color: rgb(255, 71, 47);
-        }
-    </style>   
-{% endblock %}
-
 {% block container %}
 
 <div class="container mt-4">
-    <h1>Bienvenido al Simulador ICFES</h1>
-    <p>Haz clic para comenzar el simulacro:</p>
-    <a href="{% url 'exam_start' %}" class="btn btn-primary">Iniciar examen</a>
+    <article class="separate-content">
+        <section>
+            <h1>Bienvenido al Simulador ICFES</h1>
+            <p>Haz clic para comenzar el simulacro:</p>
+            <a href="{% url 'exam_start' %}" class="btn btn-primary">Iniciar examen</a>
+        </section>
+        <section>
+            <a href="{% url 'subject_list' %}" class="btn btn-success">Materiales de estudio</a>
+        </section>
+    </article>
     {% if categories %}
         <h3 class="mt-4">Temas Disponibles</h3>
             {% for category in categories %}
@@ -40,7 +36,7 @@
             {% for exam in exams %}
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm h-100">
-                        <div class="card-body  {% if exam.score > 50  %} repuesta_correcta {% else %} repuesta_incorrecta {% endif %}  " > 
+                        <div class="card-body {% if exam.score > 80 and exam.score < 100 %}respuesta_correcta{% elif exam.score > 40 %}respuesta_alta{% else %}respuesta_incorrecta{% endif %}">
                             <h5 class="card-title">{{ exam.student_name }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">{{ exam.date|date:"Y-m-d H:i" }}</h6>
                             <p class="card-text">

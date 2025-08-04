@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block container %}
+
+<div class="container mt-4">
+  <h2>{{ material.title }}</h2>
+
+  <p><strong>Tipo de recurso:</strong> {{ material.get_resource_type_display }}</p>
+  <p><strong>Descripción:</strong> {{ material.description|default:"(Sin descripción)" }}</p>
+  <p><strong>Explicación:</strong></p>
+  <div class="border p-3 rounded bg-light">
+    {{ material.explanation }}
+  </div>
+
+  <p class="mt-3"><strong>Enlace:</strong> 
+    <a href="{{ material.link }}" target="_blank">{{ material.link }}</a>
+  </p>
+
+  {% if not material.seen %}
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-success">Marcar como visto</button>
+    </form>
+  {% else %}
+    <span class="badge bg-success">Ya visto</span>
+  {% endif %}
+
+  <br><br>
+  <a href="{% url 'material_list' material.subtopic.id %}">← Volver a Materiales</a>
+</div>
+
+{% endblock %}

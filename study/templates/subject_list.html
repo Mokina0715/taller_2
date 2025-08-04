@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block container %}
+<div class="container mt-4">
+    <h2>Categorías de estudio</h2>
+    <div class="row mt-3">
+    {% for category in categories %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <a href="{% url 'subtopic_list' category.id %}">{{ category.name }}</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+    <a href="{% url 'index' %}">← Ir al inicio</a>
+
+</div>
+{% endblock %}

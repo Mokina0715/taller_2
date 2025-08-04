@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block container %}
+
+<div class="container mt-4">
+  <h2>Temas de {{ category.name }}</h2>
+  <ul class="list-group">
+    {% for subtopic in subtopics %}
+      <li class="list-group-item">
+        <a href="{% url 'material_list' subtopic.id %}">{{ subtopic.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+  <br>
+  <a href="{% url 'subject_list' %}">← Volver a Categorías</a>
+</div>
+
+{% endblock %}
